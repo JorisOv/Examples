@@ -1,0 +1,23 @@
+! ** JCreator Project File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.10"
+LABEL := "Rekening"
+JDKPROFILE := ""
+ACTIVE := "1"
+OUTPUTPATH := "\\classes"
+COMPILER := ""
+
+! Start RunTime Configuration Structure
+#[BeginRunTime]LABEL := "<Default>" RUNAPPLIC := "" RUNAPPLET := "" PARAM := "" RUN := "\\classes\\Rekening.htm" CHECK := "10" #[EndRunTime]
+! Start Required Libraries Structure
+
+! Start Project Folder Structure
+#[BeginFolder]
+LABEL := "Root"
+FILTER := ""
+
+#[BeginFile]SOURCE := "\\BankRekening.java" #[EndFile]
+#[BeginFile]SOURCE := "\\classes\\Rekening.htm" #[EndFile]
+#[BeginFile]SOURCE := "\\Rekening.java" #[EndFile]
+#[EndFolder]

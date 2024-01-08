@@ -1,0 +1,26 @@
+import java.awt.Panel;
+import java.awt.FlowLayout;
+import java.awt.Label;
+import java.awt.Graphics;
+import java.awt.Color;
+
+
+public class StartScreen extends Panel {
+
+	Label welkom;
+
+	public StartScreen()
+	{
+		setBackground(Color.white);
+		welkom = new Label("Welkom, Mastermind is een tof spel!!");
+		add(welkom);
+	}
+
+	public void paint(Graphics g)
+	{
+		System.out.println("startsreen.paint");
+		g.drawLine(100,100,150,150);
+	}
+
+
+}

@@ -1,0 +1,14 @@
+  public class LimbCreator extends Shape3D {
+  	
+    	LimbCreator(String filename) {
+ 
+         	this.setGeometry(createGeometry(filename));
+               	this.setAppearance(createAppearance(filename));
+    }    
+
+
+
+
+
+
+}

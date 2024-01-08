@@ -1,0 +1,11 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "Neerval_Xanadu"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "Neerval_Xanadu.jcp" #[EndProject]
+
+! Start Last Document Structure
+

@@ -1,0 +1,14 @@
+Compact Flash Card 128Mb (CFC)     $76.00
+Compact Flash Card 256Mb (CFC)     $121.00
+Compact Flash Card 512Mb (CFC)     $216.00
+Compact Flash Card 1Gb (CFC)       $397.00
+Memory Stick 64Mb (MSC)            $71.00
+Memory Stick 128Mb (MSC)           $99.00
+Smart Media Card 128Mb (SMC)       $78.00
+Multimedia Card 256Mb (MMC)        $124.00
+Secure Digital 128Mb (SDC)         $97.00
+Secure Digital 256Mb (SDC)         $141.00
+XD Card 128Mb (XDC)                $135.00
+XD Card 256Mb (XDC)                $198.00
+7in1 Card Reader/Writer. USB v1.1. $40.00
+7in1 Card Reader/Writer. USB v2.0. $43.00

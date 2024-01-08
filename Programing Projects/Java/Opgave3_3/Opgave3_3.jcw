@@ -1,0 +1,11 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "Opgave3_3"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "Opgave3_3.jcp" #[EndProject]
+
+! Start Last Document Structure
+

@@ -1,0 +1,23 @@
+
+#pragma hdrstop
+#include <condefs.h>
+//--------------------------------------------------------------------------------------------------
+typedef unsigned short word;
+typedef unsigned int   dword;
+typedef unsigned long  qword;
+
+typedef bool           err;
+//--------------------------------------------------------------------------------------------------
+class config;
+
+//--------------------------------------------------------------------------------------------------
+#pragma argsused
+int main(int argc, char* argv[])
+{
+
+
+
+  return 0;
+}
+
+#include "config.cpp"

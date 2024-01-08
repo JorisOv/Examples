@@ -1,0 +1,15 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "drink_Machine"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "\\drink_Machine.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "\\classes\\Drink_Machine.htm" #[EndFile]
+#[BeginFile]SOURCE := "\\Drink_Machine.java" #[EndFile]
+
+! Start Breakpoint Structure
+

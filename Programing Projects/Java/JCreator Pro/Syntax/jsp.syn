@@ -1,0 +1,132 @@
+;jsp syntax file
+[SYNTAX]
+
+IgnoreSyntaxCase = No
+MultiLineStrings = No
+
+ExtCommentStart = /*
+ExtCommentEnd = */
+ExtCommentStartAlt = !--
+ExtCommentEndAlt = -->
+SyntaxStart = <%
+SyntaxEnd = %>
+CommentStart = //
+CommentEnd =
+StringStart = "
+StringEnd = "
+CharStart = '
+CharEnd = '
+Preprocessor = #
+Operators = -+*/<>!~%^&|=
+Brackets = {[()]}
+Escape = \
+
+KEYWORDS_1]
+
+abstract
+boolean
+break
+byte
+case
+catch
+char
+class
+continue
+default
+delegate
+do
+double
+else
+extends
+false
+final
+finally
+float
+for
+if
+implements
+import
+instanceof
+int
+interface
+long
+native
+new
+null
+package
+private
+protected
+public
+return
+short
+static
+super
+switch
+synchronized
+this
+throw
+throws
+transient
+true
+try
+void
+volatile
+while
+
+[KEYWORDS_2]
+
+
+[KEYWORDS_3]
+
+include
+file
+page
+language
+java
+session
+buffer
+autoFlush
+isThreadSafe
+true
+flase
+info
+text
+errorPage
+contentType
+charecterSet
+isErrorPage
+taglib
+uri
+prefix
+attribute
+forward
+getProperty
+name
+property
+flush
+plugin
+type
+bean
+applet
+code
+codebase
+archive
+jreversion
+params
+fallback
+setProperty
+value
+useBean
+id
+scppe
+request
+session
+application
+response
+class
+beanName
+javax
+<
+>
+%
+@

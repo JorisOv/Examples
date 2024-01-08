@@ -1,0 +1,16 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "BouncingBall2"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "\\BouncingBall2.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "..\\BouncingBall\\BouncingBall.java" #[EndFile]
+#[BeginFile]SOURCE := "\\classes\\BouncingBall2.htm" #[EndFile]
+#[BeginFile]SOURCE := "\\BouncingBall2.java" #[EndFile]
+
+! Start Breakpoint Structure
+

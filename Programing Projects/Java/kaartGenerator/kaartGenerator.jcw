@@ -1,0 +1,12 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "kaartGenerator"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "E:\\Documents and Settings\\Programing Projects\\Java\\KaartGenerator2\\KaartGenerator2.jcp" #[EndProject]
+#[BeginProject]SOURCE := "kaartGenerator.jcp" #[EndProject]
+
+! Start Last Document Structure
+

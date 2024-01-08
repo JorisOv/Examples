@@ -1,0 +1,15 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "Yazee_Java"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "\\Yazee_Java.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "\\Yazee_Java.java" #[EndFile]
+
+! Start Breakpoint Structure
+#[BeginBreakpoint]SOURCE := "\\Yazee_Java.java" CLASS := "Yazee_Java" VALUE := "26" CHECK := "1" #[EndBreakpoint]
+

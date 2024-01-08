@@ -1,0 +1,154 @@
+import java.io.*;
+import java.util.Hashtable;
+import javax.vecmath.Vector3f;
+import javax.vecmath.AxisAngle4f;
+
+
+public class LocationReader {
+	private File qw;
+	private FileReader myReader;
+	private StreamTokenizer	inputTokenizer;
+	public boolean fileReady;
+
+	private Hashtable centerTable = new Hashtable(16);
+	private Hashtable rotTable = new Hashtable(16);
+
+	LocationReader(String filename) {
+
+		fileReady = false;
+		qw = new File(filename);
+
+		try{
+			myReader = new FileReader(qw);
+			inputTokenizer = new StreamTokenizer(myReader);
+			tokenizerSetup();
+			fileReady = true;
+		}
+		catch ( FileNotFoundException a ){
+			System.out.println("File not Found");
+			fileReady = false;
+		}
+
+		if(tryReady())
+			readHashes();
+		else
+			System.out.println("Error while accessing file");
+
+	}
+
+	public static void main(String[] args) {
+		LocationReader blaat = new LocationReader(args[0]);
+
+		System.out.println( blaat.getCenters().toString() );
+		System.out.println( blaat.getRotations().toString() );
+
+	}
+
+
+	private void readHashes() {
+		String temp = "";
+		float x,y,z,angle;
+
+		if (fileReady) {
+			try {
+				while(inputTokenizer.ttype != inputTokenizer.TT_EOF ) {
+					inputTokenizer.nextToken();
+					if ( inputTokenizer.ttype == inputTokenizer.TT_WORD) {
+						if(inputTokenizer.sval.equals("name")	) {
+							System.out.println(inputTokenizer.sval);
+							inputTokenizer.nextToken();
+							System.out.println(inputTokenizer.sval);
+							temp = inputTokenizer.sval;
+						}
+						else if (inputTokenizer.sval.equals("rotation")	) {
+							inputTokenizer.nextToken();
+							x = (float) inputTokenizer.nval;
+							inputTokenizer.nextToken();
+							y = (float) inputTokenizer.nval;
+							inputTokenizer.nextToken();
+							z = (float) inputTokenizer.nval;
+							inputTokenizer.nextToken();
+							angle = (float) inputTokenizer.nval;
+
+							rotTable.put(temp, new AxisAngle4f(x, y, z, angle));
+						}
+						else if (inputTokenizer.sval.equals("center")	) {
+							inputTokenizer.nextToken();
+							x = (float) inputTokenizer.nval;
+							inputTokenizer.nextToken();
+							y = (float) inputTokenizer.nval;
+							inputTokenizer.nextToken();
+							z = (float) inputTokenizer.nval;
+
+							centerTable.put(temp, new Vector3f(x, y, z));
+						}
+					}
+				}
+			} catch (IOException a)	{
+				System.out.println(a.toString());
+			}
+
+		} else { System.out.println("File is not ready"); }
+
+	}
+
+
+	// ***************************************************
+	// Extra sub-functions *******************************
+	// ***************************************************
+
+	private void tokenizerSetup() {
+
+		// comma's are "ordinary"
+
+		// EOL chars are insignificant in VRML file
+		inputTokenizer.eolIsSignificant(false);
+
+		inputTokenizer.wordChars('A','z');
+		inputTokenizer.wordChars('{','}');
+		inputTokenizer.wordChars(',',',');
+
+		// have StreamTokenizer parse numbers (makes double-precision)
+		inputTokenizer.parseNumbers();
+
+		// Comments begin with # to end of line
+		inputTokenizer.commentChar('#');
+
+		// Whitespace characters delineate words and numbers
+		// blanks, tabs, and newlines are whitespace in	OOGL
+		inputTokenizer.whitespaceChars('\t', '\r'); // ht, lf, ff, vt, cr
+		inputTokenizer.whitespaceChars(' ', ' '); // space
+	} // End of setup
+
+	public boolean tryReady() {
+
+		if (fileReady) {
+			try {
+				if (! myReader.ready() ) {
+					//return();
+					System.out.println("Er ging iets niet goed");
+					fileReady = false;
+				}
+
+			}
+			catch ( IOException a ){
+				System.out.println("IOException	while reading file");
+				fileReady = false;
+			}
+
+		}
+
+		return fileReady;
+
+	}
+
+	public Hashtable getCenters() {
+		return centerTable;
+	}
+
+	public Hashtable getRotations() {
+		return rotTable;
+	}
+
+
+}

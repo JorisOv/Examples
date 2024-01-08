@@ -1,0 +1,18 @@
+; Plain text syntax file
+[SYNTAX]
+
+ExtCommentStart = 
+ExtCommentEnd = 
+sSyntaxStart = 
+sSyntaxEnd = 
+sCommentStart = 
+sCommentEnd =
+sStringStart = 
+sStringEnd = 
+sCharStart = 
+sCharEnd = 
+sPreprocessor =
+sOperators = 
+sBrackets = 
+
+[KEYWORDS]

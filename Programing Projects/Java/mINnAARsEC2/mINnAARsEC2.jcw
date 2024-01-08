@@ -1,0 +1,14 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "mINnAARsEC2"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "mINnAARsEC2.jcp" #[EndProject]
+
+! Start Last Document Structure
+#[BeginFile]SOURCE := "MINnAARsEC2.java" #[EndFile]
+
+! Start Last Document Structure
+

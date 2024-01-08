@@ -1,0 +1,11 @@
+! ** JCreator Workspace File (C)2000
+! ********** DO NOT EDIT *********
+
+VERSION := "1.00"
+LABEL := "deLift"
+
+! Start Project Structure
+#[BeginProject]SOURCE := "deLift.jcp" #[EndProject]
+
+! Start Last Document Structure
+

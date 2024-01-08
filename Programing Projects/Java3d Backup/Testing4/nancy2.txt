@@ -1,0 +1,145 @@
+#VRML V2.0 utf8
+
+include(protos.m4)
+
+DEF Humanoid Humanoid {
+  humanoidBody [
+    DEF hanim_HumanoidRoot Joint {
+      name "HumanoidRoot"
+      translation 0 0 0
+      rotation 0 0 1 0
+      center -0.00405 0.855 -0.000113
+      children [
+	DEF hanim_sacroiliac Joint {
+	  name "sacroiliac"
+	  rotation 0 0 1 0
+	  center 0 1.01 -0.0204
+	  children [ 
+	    include(hanim_pelvis.m4) 
+	    DEF hanim_l_hip Joint {
+	      name "l_hip"
+	      rotation 0 0 1 0
+	      center 0.122 0.888271 -0.0693267
+	      children [ 
+	        include(hanim_l_thigh.m4) 
+	    	  DEF hanim_l_knee Joint {
+		       name "l_knee"
+		       rotation 0 0 1 0
+		       center 0.0738 0.517 -0.0284
+		       children [ include(hanim_l_calf.m4)
+		        DEF hanim_l_ankle Joint {
+		          name "l_ankle"
+		          rotation 0 0 1 0
+		          center 0.0645 0.0719 -0.048
+		          children include(hanim_l_hindfoot.m4) 
+		        }
+		        ]
+		    }
+	      ]
+	    }
+	    DEF hanim_r_hip Joint {
+	      name "r_hip"
+	      rotation 0 0 1 0
+	      center -0.11 0.892362 -0.0732533
+	      children [ include(hanim_r_thigh.m4) 
+		      DEF hanim_r_knee Joint {
+		        name "r_knee"
+		        rotation 0 0 1 0
+  		      center -0.0699 0.51 -0.0166
+	  	      children [ include(hanim_r_calf.m4) 
+		          DEF hanim_r_ankle Joint {
+		            name "r_ankle"
+		            rotation 0 0 1 0
+		            center -0.064 0.0753 -0.0412
+		            children include(hanim_r_hindfoot.m4) 
+		          }
+		        ]
+		      }
+	      ]
+	    }
+	  ]
+	} # end hanim_sacroiliac
+	
+	DEF hanim_vl1 Joint {
+	  name "vl1"
+	  rotation 0 0 1 0
+	  center -0.00405 1.07 -0.0275
+	  children [ include(hanim_c7.m4) 
+	    DEF hanim_l_shoulder Joint {
+	      name "l_shoulder"
+	      rotation 0 0 1 0
+	      center 0.167 1.36 -0.0518
+	      children [ include(hanim_l_upperarm.m4) 
+		      DEF hanim_l_elbow Joint {
+		        name "l_elbow"
+		        rotation 0 0 1 0
+		        center 0.196 1.07 -0.0518
+		        children [ include(hanim_l_forearm.m4) 
+		          DEF hanim_l_wrist Joint {
+		            name "l_wrist"
+		            rotation 0 0 1 0
+		            center 0.213 0.811 -0.0338
+		            children include(hanim_l_hand.m4) 
+		          }
+		        ]
+		      }
+	      ]
+	    }
+	    DEF hanim_r_shoulder Joint {
+	      name "r_shoulder"
+	      rotation 0 0 1 0
+	      center -0.167 1.36 -0.0458
+	      children [ include(hanim_r_upperarm.m4) 
+	      	DEF hanim_r_elbow Joint {
+	      	  name "r_elbow"
+      		  rotation 0 0 1 0
+		        center -0.192 1.07 -0.0498
+		        children [ include(hanim_r_forearm.m4) 
+		          DEF hanim_r_wrist Joint {
+		            name "r_wrist"
+		            rotation 0 0 1 0
+		            center -0.217 0.811 -0.0338
+		            children include(hanim_r_hand.m4) 
+		          }
+		        ]
+		      }
+	      ]
+	    }
+	    DEF hanim_vc4 Joint {
+	      name "vc4"
+	      rotation 0 0 1 0
+	      center 0 1.43 -0.0458
+	      children [ include(hanim_c4.m4) 
+	      	DEF hanim_skullbase Joint {
+	      	  name "skullbase"
+	      	  rotation 0 0 1 0
+		        center 0 1.54 -0.0409
+		        children include(hanim_skull.m4) 
+		      }
+	      ]
+	    }
+	  ]
+	} # end hanim_vl1
+      ]
+    }
+  ]
+  include(jointsandsegments.m4)
+  
+  info [ "humanoidVersion=Nancy V1.2b",
+    "authorName=Cindy Ballreich",
+    "authorEmail=cindy@ballreich.net",
+    "copyright=1997 3Name3D / Yglesias, Wallock, Divekar, Inc., all rights reserved.",
+    "creationDate=Tue Dec 30 08:30:08 PST 1997",
+    "usageRestrictions=Noncommercial usage is ok if 3Name3D name and
+    logo <www.ballreich.net/vrml/h-anim/small_logo.gif> is present
+    and proper credit is given." ]
+  name "nancy"
+  
+  version "1.1"
+  
+  include(viewpoints.m4)
+}
+
+
+
+

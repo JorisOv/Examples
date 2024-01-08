@@ -1,0 +1,47 @@
+;ldif syntax file
+[SYNTAX]
+
+IgnoreSyntaxCase = No
+MultiLineStrings = No
+
+ExtCommentStart = 
+ExtCommentEnd = 
+SyntaxStart = 
+SyntaxEnd = 
+CommentStart = # 
+CommentEnd =
+StringStart = =
+StringEnd = ,
+CharStart = 
+CharEnd = 
+Preprocessor = 
+Operators = 
+Brackets = {}[]()
+Escape = \
+
+[KEYWORDS_1]
+dn
+uniquemember
+cn
+
+[KEYWORDS_2] 
+gecos
+givenname
+sn
+
+[KEYWORDS_3] 
+uid
+uidnumber
+gidnumber
+loginshell
+homedirectory
+shadowlastchange
+userpassword
+objectclass
+
+[KEYWORDS_4] 
+o
+ou
+ 
+
+ 

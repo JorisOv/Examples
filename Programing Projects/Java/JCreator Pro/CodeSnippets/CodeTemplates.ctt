@@ -1,0 +1,81 @@
+! ** JCreator CodeTemplate File (C)2000
+! ************ DO NOT EDIT ************
+
+VERSION := "1.00"
+! Start CodeTemplate Structure
+
+#[BeginFile]LABEL := "comment" DESCRIPTION := "JavaDoc comment"
+SOURCE := "/**"
+SOURCE := " * |"
+SOURCE := " */"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "while" DESCRIPTION := "while loop with block"
+SOURCE := "while (|)"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "out" DESCRIPTION := "System.out.println"
+SOURCE := "System.out.println (|)"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "fostream" DESCRIPTION := "file output stream"
+SOURCE := "PrintWriter fostream = new PrintWriter(new FileWriter(filename|));"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "forb" DESCRIPTION := "for statement block"
+SOURCE := "for (int i = 0; i<|; i++) {"
+SOURCE := "}"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "whileb" DESCRIPTION := "while statement block"
+SOURCE := "while (|) {"
+SOURCE := "}"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "switch" DESCRIPTION := "switch statement block"
+SOURCE := "switch (|) {"
+SOURCE := "	case : break;"
+SOURCE := "	case : break;"
+SOURCE := "	default :"
+SOURCE := "}"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "tryc" DESCRIPTION := "try catch block"
+SOURCE := "try {|"
+SOURCE := "}"
+SOURCE := "catch (Exception ex) {"
+SOURCE := "}"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "trycf" DESCRIPTION := "try catch finally block"
+SOURCE := "try {|"
+SOURCE := "}"
+SOURCE := "catch (Exception ex) {"
+SOURCE := "}"
+SOURCE := "finally {"
+SOURCE := "}"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "streamin" DESCRIPTION := "input from keyboard"
+SOURCE := "BufferedReader streami = new BufferedReader("
+SOURCE := "	new InputStreamReader(System.in));"
+SOURCE := "|"
+SOURCE := "	"
+SOURCE := "	"
+#[EndFile]
+
+
+#[BeginFile]LABEL := "for" DESCRIPTION := "for statement"
+SOURCE := "for (int i = 0; i<|; i++)"
+#[EndFile]
+
+

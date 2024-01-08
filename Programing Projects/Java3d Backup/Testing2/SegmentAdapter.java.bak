@@ -1,0 +1,194 @@
+/* segment interface voor opdracht 2 */
+
+/**
+ * Implemented by Jeroen van Yperen and Mark Raadsen, 27/March/2002
+ * (j.vanijperen@student.utwente.nl)
+ * (m.p.h.raadsen@student.utwente.nl)
+ */
+
+import javax.vecmath.*;
+import javax.media.j3d.*;
+
+
+/**
+ * The Segment interface describes Segments that define the visible part
+ * of "body parts",
+ */
+public class SegmentAdapter implements Segment {
+	private String myName = new String("bla");
+	private Point3f myBboxCenter = new Point3f(0.0f, 0.0f, 0.0f);
+	private Point3f myMassCenter = new Point3f(0.0f, 0.0f, 0.0f);
+	private double myLength;
+	private Float myMass;
+	private Vector3f negatedCenter;
+	private LimbCreator myLimb;
+
+	// some extra Transformgroups, which are needed because some of the limbs need to some
+	// adjustments before they are correctly placed in the body (these adjustments are:
+	// translation and/or angle and/ or center). To perform these adjustments four transformgroups
+	// are needed. btw it is not nessecary to have all three adjustments, 0,1 or 2 is also possible
+	private TransformGroup myTranslateGroup = new TransformGroup();
+	private Transform3D myTranslate3D = new Transform3D();
+
+	private TransformGroup my2CenterGroup = new TransformGroup();
+	private Transform3D my2Center3D = new Transform3D();
+
+	private TransformGroup rotationGroup = new TransformGroup();
+	private Transform3D rotation3D = new Transform3D();
+
+	private TransformGroup my2RealPlaceGroup = new TransformGroup();
+	private Transform3D my2RealPlace3D = new Transform3D();
+
+
+
+
+
+	//now you want to create the body part by using a file as an input for the data
+	// so we made it possible to initalize SegmentAdapter with a file. By giving the files name
+	// as an input to SegmentAdapter. This adapter will also be named after the file
+	public SegmentAdapter(String filename) {
+		myName = filename;
+
+		//now parse the given file into a Shape3D object by using our own LimbCreator function
+		myLimb = new LimbCreator(myName);
+
+		//now the limb has been created, the possible adjustments that have to be made can be computed
+		//first compute the possible translation
+		myTranslate3D.setTranslation(myLimb.getTranslation());
+		myTranslateGroup.setTransform(myTranslate3D);
+
+		//second; calculate the center displacement
+		my2Center3D.setTranslation(myLimb.getCenter());
+		my2CenterGroup.setTransform(my2Center3D);
+
+		//third; calcultate the rotation specified
+		rotation3D.setRotation(myLimb.getRotation());
+		rotationGroup.setTransform(rotation3D);
+
+		//fourth; and translate back to the original place
+		//negate the properties of center
+		negatedCenter = myLimb.getCenter();
+		negatedCenter.negate();
+		//translate over the negated center
+		my2RealPlace3D.setTranslation(negatedCenter);
+		//negate agin to regain the original center values, so no mistake can be made with the getcenter() method
+		my2RealPlaceGroup.setTransform(my2RealPlace3D);
+
+		//add the computed groups to the tree
+		myTranslateGroup.addChild(my2CenterGroup);
+		my2CenterGroup.addChild(rotationGroup);
+		rotationGroup.addChild(my2RealPlaceGroup);
+		my2RealPlaceGroup.addChild(myLimb);
+
+		}
+
+
+	/*
+	 * sets the name of the Joint
+	 */
+	public void setName(String name) {
+		myName = name;
+	}
+
+	/**
+	 * gets the name of the Joint
+	 */
+	public String getName() {
+		return myName;
+	}
+
+	/**
+	 * sets the center of the bounding box.
+	 */
+	public void setBboxCenter(Point3f bboxCenter) {
+		myBboxCenter = bboxCenter;
+	}
+
+	/**
+	 * gets the center of the bounding box.
+	 */
+	public Point3f getBboxCenter() {
+
+		return myBboxCenter;
+	}
+
+	/**
+	 * sets the length of the segment.
+	 */
+	public void setLength(double length) {
+		myLength = length;
+
+	}
+
+
+	/**
+	 * gets the length of the segment.
+	 */
+	public double getLength() {
+		return myLength;
+	}
+
+	/**
+	 * sets the center of mass.
+	 */
+	public void setCenterOfMass(Point3f bboxCenter) {
+		myMassCenter = bboxCenter;
+	}
+
+	/**
+	 * gets the center of mass.
+	 */
+	public Point3f getCenterOfMass() {
+
+		return myMassCenter;
+	}
+
+
+	/**
+	 * sets the mass.
+	 */
+	public void setMass(Float mass) {
+		myMass = mass;
+	}
+
+	/**
+	 * gets the mass.
+	 */
+	public float getMass() {
+		return myMass.floatValue();
+	}
+
+	/**
+	 * adds child to the list of children
+	 */
+	public void addChild(Node child) {
+		my2RealPlaceGroup.addChild(child);
+	}
+
+	/**
+	 * returns all children, in the form of an Enumeration.
+	 */
+	public java.util.Enumeration getAllChildren() {
+		return my2RealPlaceGroup.getAllChildren();
+	}
+
+
+	/**
+	 * removes the child at the specified index
+	 */
+	public void removeChild(int index) {
+		my2RealPlaceGroup.removeChild(index);
+	}
+
+
+	/**
+	 * returns the transformgroup that should be added to the joint (since a "Segment"
+	 * isn't a node, and therefor can't be added to a (transform)group)
+	 */
+	public TransformGroup getGroup() {
+		return myTranslateGroup;
+	}
+
+
+}
+

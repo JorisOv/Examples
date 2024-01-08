@@ -1,0 +1,117 @@
+/*---------------------------------------
+
+   |-------------------------|
+   | Stephan Langeweg        |
+   | Fernand Schaling        |
+   | Tiv1e                   |
+   |-------------------------|
+
+   |-------------------------|
+   | Onderdeel van:	         |
+   | Mastermind              |
+   | V1.2                    |
+   |-------------------------|
+
+   |-------------------------|
+   | Info:                   |
+   | Codemaker Klasse        |
+   | Hier wordt de code      |
+   | gemaakt en gecontroleerd|
+   |-------------------------|
+
+//---------------------------------------*/
+
+public class Codemaker
+{
+	// Attributes:
+ 	private int[] code = null;
+ 	private int aantalKleuren = 0;
+ 	private int aantalKeuzes = 0;
+	private int[] getallenCode = null;
+
+	// extra opties
+	private static int score;
+	private static int aantalBeurten;
+
+ 	//----------------------------------------------------
+  	// Constructor.
+  	// Status: Werkt
+  	public Codemaker (int inKleuren, int inKeuzes)
+  	{
+		aantalKleuren = inKleuren;
+		aantalKeuzes = inKeuzes;
+		code = new int[aantalKeuzes];
+		getallenCode = new int[aantalKleuren];
+
+		//code generen
+		for(int i=0; i<aantalKeuzes; i++)
+	 	{
+			code[i]=(int)((Math.random() * aantalKleuren));
+	 		getallenCode[code[i]] = getallenCode[code[i]] + 1;
+	 		 System.out.println("Getal" + i+" = " + code[i]);
+		}
+
+
+	}
+	//----------------------------------------------------
+
+	//----------------------------------------------------
+	//Methods
+
+  	//-------------------------------
+  	// Aantal goed maar niet op de juist plek
+  	// status: werkt
+  	public int aantalGoed(int[] aantalGoed)
+	{
+		int returnwaarde = 0;
+		int cache[]= new int [aantalKleuren];
+		int goed[] = new int [aantalKleuren];
+
+		//-----------------------------------
+		// histogram maken van de ingevoerde code
+		for(int i=0; i<aantalKeuzes; i++)
+	 	{
+			cache[aantalGoed[i]]++;
+			// System.out.println("Cache" + aantalGoed[i] +" = " + cache[aantalGoed[i]]);
+		}
+		//------------------------------------
+
+		//------------------------------------
+		//vergelijken
+		for(int i=0; i<aantalKleuren; i++)
+		{
+			if(	getallenCode[i] !=0 && cache[i] !=0)
+			{
+				returnwaarde =  returnwaarde + Math.min(cache[i],getallenCode[i]);
+			}
+		}
+		System.out.println("Aantal op de goed:"+returnwaarde);
+		//------------------------------------
+		return returnwaarde;
+	}
+	//-------------------------------
+
+	//-------------------------------
+  	// Aantal juist methode
+  	// Status: Werkt.
+  	public int aantalOpDeJuistePlaats(int[] aantalJuist)
+  	{
+		int returnwaarde =0;
+		for(int i=0; i<aantalKeuzes; i++)
+		{
+			if(aantalJuist[i] == code[i])
+			{
+				returnwaarde++;
+			}
+		}
+		System.out.println("Aantal op de juiste plaats:"+returnwaarde);
+		return returnwaarde;
+	}
+	//-------------------------------
+	public int getP()
+	{
+		return aantalKeuzes;
+	}
+
+
+}

@@ -1,0 +1,87 @@
+
+
+      name "HumanoidRoot"
+      translation 0 0 0
+      rotation 0 0 1 0
+      center -0.00405 0.855 -0.000113
+
+	  name "sacroiliac"
+	  rotation 0 0 1 0
+	  center 0 1.01 -0.0204
+
+	      name "l_hip"
+	      rotation 0 0 1 0
+	      center 0.122 0.888271 -0.0693267
+
+		       name "l_knee"
+		       rotation 0 0 1 0
+		       center 0.0738 0.517 -0.0284
+
+		          name "l_ankle"
+		          rotation 0 0 1 0
+		          center 0.0645 0.0719 -0.048
+
+	      name "r_hip"
+	      rotation 0 0 1 0
+	      center -0.11 0.892362 -0.0732533
+
+		        name "r_knee"
+		        rotation 0 0 1 0
+  		        center -0.0699 0.51 -0.0166
+
+		            name "r_ankle"
+		            rotation 0 0 1 0
+		            center -0.064 0.0753 -0.0412
+
+
+	  name "vl1"
+	  rotation 0 0 1 0
+	  center -0.00405 1.07 -0.0275
+
+	      name "l_shoulder"
+	      rotation 0 0 1 0
+	      center 0.167 1.36 -0.0518
+
+		        name "l_elbow"
+		        rotation 0 0 1 0
+		        center 0.196 1.07 -0.0518
+
+		            name "l_wrist"
+		            rotation 0 0 1 0
+		            center 0.213 0.811 -0.0338
+
+	      name "r_shoulder"
+	      rotation 0 0 1 0
+	      center -0.167 1.36 -0.0458
+
+	      	  name "r_elbow"
+      		  rotation 0 0 1 0
+		  center -0.192 1.07 -0.0498
+
+		            name "r_wrist"
+		            rotation 0 0 1 0
+		            center -0.217 0.811 -0.0338
+
+	      name "vc4"
+	      rotation 0 0 1 0
+	      center 0 1.43 -0.0458
+
+	      	  name "skullbase"
+	      	  rotation 0 0 1 0
+		  center 0 1.54 -0.0409
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

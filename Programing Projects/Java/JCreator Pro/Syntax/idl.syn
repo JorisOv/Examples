@@ -1,0 +1,93 @@
+;Syntax file for Corba
+[SYNTAX]
+
+IgnoreSyntaxCase = No
+MultiLineStrings = No
+
+ExtCommentStart = /*
+ExtCommentEnd = */
+SyntaxStart = 
+SyntaxEnd = 
+CommentStart = //
+CommentEnd =
+StringStart = "
+StringEnd = "
+CharStart = '
+CharEnd = '
+Preprocessor = #
+Operators = -+*/<>!~%^&|=
+Brackets = {}[]()
+Escape = \
+
+[KEYWORDS_1]
+
+abstract
+any
+attribute
+boolean
+case
+char
+const
+context
+custom
+default
+double
+enum
+exception
+factory
+fixed
+float
+interface
+long
+module
+native
+Object
+octet
+oneway
+private
+public
+raises
+readonly
+sequence
+short
+string
+struct
+supports
+switch
+truncatable
+typedef
+unsigned
+union
+ValueBase
+valuetype
+void
+wchar
+wstring
+
+[KEYWORDS_2]
+
+in
+inout
+out
+
+[KEYWORDS_3]
+
+TRUE
+FALSE
+
+[KEYWORDS_4]
+
+
+[PREPROCESSORS]
+
+#define
+#elif
+#else
+#endif
+#error
+#if
+#ifdef
+#ifndef
+#include
+#pragma
+#undef

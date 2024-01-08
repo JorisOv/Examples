@@ -1,0 +1,21 @@
+Description of Hanim7 and the containing classes:
+
+Hanim 7 renders a simple avatar, made out of spheres and cylinders, with a limited
+amount of animation. At present the only animation is the waving of the right arm 
+of the avater, activated by keypress.
+
+The general idea is to use implementations of the "Joint" and "Segment" interfaces,
+in our case named "JointAdapter" and "SegmentAdapter".
+In the "joints" rotation, translation and scaling is applied, while the Segments 
+contain the "objects" to be rendered. We don't directly add the objects, but have
+a method that creates "limbs"; a sphere and cylinder in one group, scaled to the
+proportions given to the method. (The limbs have no lighting or texture.)
+
+The joints are the "glue" that sets the whole skeleton up. In our procedure we create
+these joints (and their corresponding segment) in one go. Only after every part
+has been created and initialized, we put the "skeleton" together (from bottom-up).
+
+The animation is done by using two "Behaviours". These behaviours have a reference to
+transform group in the joint, that takes care of the scaling and rotation.
+After a keypress, the matrix representing the rotation is adjusted. After one 
+"adjustment" has been made, the other behaviour becomes active.

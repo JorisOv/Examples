@@ -1,0 +1,176 @@
+; XML syntax file for ANT
+[SYNTAX]
+
+IgnoreSyntaxCase = No
+MultiLineStrings = Yes
+
+ExtCommentStart = !--
+ExtCommentEnd = -->
+SyntaxStart = <
+SyntaxEnd = >
+CommentStart =
+CommentEnd =
+StringStart = " 
+StringEnd = "
+CharStart = '
+CharEnd = '
+Preprocessor =
+Operators = -+*/<>!~%^&|=
+Brackets = {}[]()
+Escape = \
+
+[KEYWORDS_1]
+
+fileset	
+path	
+pathelement	
+patternset	
+project	
+property 	
+target	
+
+[KEYWORDS_2]
+
+ant
+antcall
+antstructure
+available
+chmod
+copy
+Copydir
+copyfile
+cvs
+delete
+deltree
+echo
+exec
+execon
+fail
+filter
+fixerlf
+genkey
+get
+gunzip
+gzip
+jar
+java
+javac
+javadoc
+avadoc2
+mail
+mkdir
+move
+patch
+property
+rename
+replace
+rmic
+signjar
+sql
+tyle
+tar
+taskdef
+touch
+tstamp
+unjar
+untar
+unwar
+unzip
+uptodate
+war
+zip 
+
+[KEYWORDS_3]
+
+alias	
+append	
+basedir
+bootclasspath	
+bootclasspathref	
+cabfile	
+classname	
+classpath	
+classpathref	
+command	
+compress	
+cvsRoot	
+datetime	
+default	
+defaultexcludes	
+depends	
+deprecation	
+description	
+dest	
+destdir	
+destDir	
+dir	
+encoding	
+eof	
+error	
+excludes	
+excludesfile	
+extdirs	
+failonerror	
+file	
+filtering	
+filtersfile	
+flatten	
+fork	
+from
+id	
+if	
+ignoreerrors	
+includeEmptyDirs	
+includes	
+includesfile	
+jarfile	
+jvm	
+jvmargs	
+key	
+line	
+location	
+mailhost	
+maxmemory	
+message	
+millis	
+name	
+originalfile	
+output	
+overwrite	
+package	
+parallel	
+password	
+patchfile	
+path	
+perm	
+property	
+quiet	
+replace	
+resource	
+server	
+src	
+srcdir	
+srcDir	
+subject	
+tab	
+tablength	
+tag	
+tarfile	
+target	
+targetfile	
+todir	
+tofile	
+token	
+tolist	
+type	
+unless	
+userid	
+value	
+verbose	
+verify	
+warfile	
+webxml	
+zipfile	
+
+[KEYWORDS_4]
+

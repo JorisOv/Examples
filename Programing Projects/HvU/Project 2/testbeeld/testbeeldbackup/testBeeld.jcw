@@ -1,0 +1,16 @@
+<?xml?>
+<workspace>
+	<settings>
+		<label>testBeeld</label>
+	</settings>
+	<users>
+		<user>
+			<path>testBeeld.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>testBeeld.jcp</path>
+		</project>
+	</projects>
+</workspace>

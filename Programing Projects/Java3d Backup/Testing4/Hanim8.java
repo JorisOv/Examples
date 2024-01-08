@@ -1,0 +1,487 @@
+
+/**
+ * Hanim renders a simple avatar.
+ * No lighting or texture mapping is used.
+ */
+
+import java.applet.Applet;
+import java.awt.BorderLayout;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.util.Enumeration;
+import javax.swing.*;
+import javax.swing.event.*;
+import com.sun.j3d.utils.geometry.*;
+import com.sun.j3d.utils.universe.*;
+import javax.media.j3d.*;
+import javax.vecmath.*;
+import java.util.Hashtable;
+
+
+
+public class Hanim8 extends JFrame {
+
+   /**
+    * the constructor sets up a window with a canvas3D, a Universe, a viewpoint etc.
+    * The actual contents of the scene graph is created by calling createSceneGraph().
+    * Therefore, this part of the program can be kept the same for many experiments
+    * with Java3D
+    */
+   public Hanim8(String filename) {
+      // Standard setting up of a Canvas and universe.
+      Container cp = getContentPane();
+      cp.setLayout(new BorderLayout());
+      setSize(512, 512);
+      addWindowListener(new WindowAdapter() {
+          public void windowClosing(WindowEvent e) { System.exit(0); }
+        } );
+      GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
+      Canvas3D canvas3D = new Canvas3D(config);
+      cp.add("Center", canvas3D);
+      show();
+
+      SimpleUniverse simpleU = new SimpleUniverse(canvas3D);
+      simpleU.getViewingPlatform().setNominalViewingTransform();
+
+      // create some scenegraph, and add it to the universe.
+      // This last step makes the scene "live", that is, rendering for
+      // this scenegraph starts automatically.
+      BranchGroup scene = createSceneGraph(filename);
+      simpleU.addBranchGraph(scene);
+   }
+
+
+   /**
+    * creates the actual "contents" of the scene graph, and returns a BranchGroup
+    * that is ready to go "live", by inserting it in a Universe.
+    */
+   public BranchGroup createSceneGraph(String filename) {
+      // objRoot is the top of our scene graph.
+      BranchGroup objRoot = new BranchGroup();
+      //bounds is used to indicate the region where background and animation are active.
+      BoundingSphere bounds = new BoundingSphere(new Point3d(), 1000.0);
+
+      // First, create a background color.
+      // HSBColor3f specifies a Color3f by means of hue, saturation, and brightness.
+      Color3f backColor = HSBColor3f(240, 30, 70);
+      Background background = new Background(backColor);
+
+      background.setApplicationBounds(bounds); // background is active only within the bounds sphere.
+      objRoot.addChild(background);   // add the background Node to the scene graph.
+
+      Hashtable centerTable;
+      Hashtable rotTable;
+
+      // open the file to read in the locations and rotations
+	LocationReader locRead = new LocationReader(filename);
+	centerTable = locRead.getCenters();
+	rotTable = locRead.getRotations();
+
+	Hashtable referenceColors = new Hashtable();
+
+	RotPathInterpolatorReader polRead = new RotPathInterpolatorReader("basicwalkinterpolators.m4", bounds);
+	Hashtable polTable = polRead.getTable();
+
+	// create a shape3d, then add it to a transformgroup and make it live
+
+
+
+	Vector3f rootVector3f = new Vector3f(0.0f, -0.8f, 0.0f);
+	Transform3D root3D = new Transform3D();
+	root3D.setTranslation(rootVector3f);
+	TransformGroup rootGroup = new TransformGroup();
+	rootGroup.setTransform(root3D);
+
+	JointAdapter HumanoidRoot = new JointAdapter("HumanoidRoot");
+	HumanoidRoot.setCenter((Vector3f) centerTable.get(HumanoidRoot.getName()) );
+	HumanoidRoot.setRotation((AxisAngle4f) rotTable.get(HumanoidRoot.getName()));
+
+	JointAdapter sacroiliac = new JointAdapter("sacroiliac");
+	sacroiliac.setCenter( (Vector3f) centerTable.get(sacroiliac.getName()));
+	sacroiliac.setRotation( (AxisAngle4f) rotTable.get(sacroiliac.getName()));
+	( (RotationPathInterpolator) polTable.get(sacroiliac.getName()) ).setTarget(sacroiliac.getScaleRotateTransformGroup());
+	sacroiliac.addChild( (RotationPathInterpolator) polTable.get(sacroiliac.getName()) );
+
+	SegmentAdapter pelvis = new SegmentAdapter("pelvis", referenceColors);
+
+	JointAdapter l_hip = new JointAdapter("l_hip");
+	l_hip.setCenter( (Vector3f) centerTable.get(l_hip.getName()));
+	l_hip.setRotation( (AxisAngle4f) rotTable.get(l_hip.getName()));
+	( (RotationPathInterpolator) polTable.get(l_hip.getName()) ).setTarget(l_hip.getScaleRotateTransformGroup());
+	l_hip.addChild( (RotationPathInterpolator) polTable.get(l_hip.getName()) );
+
+
+	SegmentAdapter l_thigh = new SegmentAdapter("l_thigh", referenceColors);
+
+	JointAdapter l_knee = new JointAdapter("l_knee");
+	l_knee.setCenter( (Vector3f) centerTable.get(l_knee.getName()));
+	l_knee.setRotation( (AxisAngle4f) rotTable.get(l_knee.getName()));
+	( (RotationPathInterpolator) polTable.get(l_knee.getName()) ).setTarget(l_knee.getScaleRotateTransformGroup());
+	l_knee.addChild( (RotationPathInterpolator) polTable.get(l_knee.getName()) );
+
+	SegmentAdapter l_calf = new SegmentAdapter("l_calf", referenceColors);
+
+	JointAdapter l_ankle = new JointAdapter("l_ankle");
+	l_ankle.setCenter( (Vector3f) centerTable.get(l_ankle.getName()));
+	l_ankle.setRotation( (AxisAngle4f) rotTable.get(l_ankle.getName()));
+	( (RotationPathInterpolator) polTable.get(l_ankle.getName()) ).setTarget(l_ankle.getScaleRotateTransformGroup());
+	l_ankle.addChild( (RotationPathInterpolator) polTable.get(l_ankle.getName()) );
+
+	SegmentAdapter l_hindfoot = new SegmentAdapter("l_hindfoot", referenceColors);
+
+	JointAdapter r_hip = new JointAdapter("r_hip");
+	r_hip.setCenter( (Vector3f) centerTable.get(r_hip.getName()));
+	r_hip.setRotation( (AxisAngle4f) rotTable.get(r_hip.getName()));
+	( (RotationPathInterpolator) polTable.get(r_hip.getName()) ).setTarget(r_hip.getScaleRotateTransformGroup());
+	r_hip.addChild( (RotationPathInterpolator) polTable.get(r_hip.getName()) );
+
+	SegmentAdapter r_thigh = new SegmentAdapter("r_thigh", referenceColors);
+
+	JointAdapter r_knee = new JointAdapter("r_knee");
+	r_knee.setCenter( (Vector3f) centerTable.get(r_knee.getName()));
+	r_knee.setRotation( (AxisAngle4f) rotTable.get(r_knee.getName()));
+	( (RotationPathInterpolator) polTable.get(r_knee.getName()) ).setTarget(r_knee.getScaleRotateTransformGroup());
+	r_knee.addChild( (RotationPathInterpolator) polTable.get(r_knee.getName()) );
+
+	SegmentAdapter r_calf = new SegmentAdapter("r_calf", referenceColors);
+
+	JointAdapter r_ankle = new JointAdapter("r_ankle");
+	r_ankle.setCenter( (Vector3f) centerTable.get(r_ankle.getName()));
+	r_ankle.setRotation( (AxisAngle4f) rotTable.get(r_ankle.getName()));
+	( (RotationPathInterpolator) polTable.get(r_ankle.getName()) ).setTarget(r_ankle.getScaleRotateTransformGroup());
+	r_ankle.addChild( (RotationPathInterpolator) polTable.get(r_ankle.getName()) );
+
+	SegmentAdapter r_hindfoot = new SegmentAdapter("r_hindfoot", referenceColors);
+
+	JointAdapter vl1 = new JointAdapter("vl1");
+	vl1.setCenter( (Vector3f) centerTable.get(vl1.getName()));
+	vl1.setRotation( (AxisAngle4f) rotTable.get(vl1.getName()));
+	( (RotationPathInterpolator) polTable.get(vl1.getName()) ).setTarget(vl1.getScaleRotateTransformGroup());
+	vl1.addChild( (RotationPathInterpolator) polTable.get(vl1.getName()) );
+
+	SegmentAdapter c7 = new SegmentAdapter("c7", referenceColors);
+
+	JointAdapter l_shoulder = new JointAdapter("l_shoulder");
+	l_shoulder.setCenter( (Vector3f) centerTable.get(l_shoulder.getName()));
+	l_shoulder.setRotation( (AxisAngle4f) rotTable.get(l_shoulder.getName()));
+	( (RotationPathInterpolator) polTable.get(l_shoulder.getName()) ).setTarget(l_shoulder.getScaleRotateTransformGroup());
+	l_shoulder.addChild( (RotationPathInterpolator) polTable.get(l_shoulder.getName()) );
+
+	SegmentAdapter l_upperarm = new SegmentAdapter("l_upperarm", referenceColors);
+
+	JointAdapter l_elbow = new JointAdapter("l_elbow");
+	l_elbow.setCenter( (Vector3f) centerTable.get(l_elbow.getName()));
+	l_elbow.setRotation( (AxisAngle4f) rotTable.get(l_elbow.getName()));
+	( (RotationPathInterpolator) polTable.get(l_elbow.getName()) ).setTarget(l_elbow.getScaleRotateTransformGroup());
+	l_elbow.addChild( (RotationPathInterpolator) polTable.get(l_elbow.getName()) );
+
+	SegmentAdapter l_forearm = new SegmentAdapter("l_forearm", referenceColors);
+
+	JointAdapter l_wrist = new JointAdapter("l_wrist");
+	l_wrist.setCenter( (Vector3f) centerTable.get(l_wrist.getName()));
+	l_wrist.setRotation( (AxisAngle4f) rotTable.get(l_wrist.getName()));
+	( (RotationPathInterpolator) polTable.get(l_wrist.getName()) ).setTarget(l_wrist.getScaleRotateTransformGroup());
+	l_wrist.addChild( (RotationPathInterpolator) polTable.get(l_wrist.getName()) );
+
+	SegmentAdapter l_hand = new SegmentAdapter("l_hand", referenceColors);
+
+	JointAdapter r_shoulder = new JointAdapter("r_shoulder");
+	r_shoulder.setCenter( (Vector3f) centerTable.get(r_shoulder.getName()));
+	r_shoulder.setRotation( (AxisAngle4f) rotTable.get(r_shoulder.getName()));
+	( (RotationPathInterpolator) polTable.get(r_shoulder.getName()) ).setTarget(r_shoulder.getScaleRotateTransformGroup());
+	r_shoulder.addChild( (RotationPathInterpolator) polTable.get(r_shoulder.getName()) );
+
+	SegmentAdapter r_upperarm = new SegmentAdapter("r_upperarm", referenceColors);
+
+	JointAdapter r_elbow = new JointAdapter("r_elbow");
+	r_elbow.setCenter( (Vector3f) centerTable.get(r_elbow.getName()));
+	r_elbow.setRotation( (AxisAngle4f) rotTable.get(r_elbow.getName()));
+	( (RotationPathInterpolator) polTable.get(r_elbow.getName()) ).setTarget(r_elbow.getScaleRotateTransformGroup());
+	r_elbow.addChild( (RotationPathInterpolator) polTable.get(r_elbow.getName()) );
+
+	SegmentAdapter r_forearm = new SegmentAdapter("r_forearm", referenceColors);
+
+	JointAdapter r_wrist = new JointAdapter("r_wrist");
+	r_wrist.setCenter( (Vector3f) centerTable.get(r_wrist.getName()));
+	r_wrist.setRotation( (AxisAngle4f) rotTable.get(r_wrist.getName()));
+	( (RotationPathInterpolator) polTable.get(r_wrist.getName()) ).setTarget(r_wrist.getScaleRotateTransformGroup());
+	r_wrist.addChild( (RotationPathInterpolator) polTable.get(r_wrist.getName()) );
+
+	SegmentAdapter r_hand = new SegmentAdapter("r_hand", referenceColors);
+
+	JointAdapter vc4 = new JointAdapter("vc4");
+	vc4.setCenter( (Vector3f) centerTable.get(vc4.getName()));
+	vc4.setRotation( (AxisAngle4f) rotTable.get(vc4.getName()));
+	( (RotationPathInterpolator) polTable.get(vc4.getName()) ).setTarget(vc4.getScaleRotateTransformGroup());
+	vc4.addChild( (RotationPathInterpolator) polTable.get(vc4.getName()) );
+
+	SegmentAdapter c4 = new SegmentAdapter("c4", referenceColors);
+
+	JointAdapter skullbase = new JointAdapter("skullbase");
+	skullbase.setCenter( (Vector3f) centerTable.get(skullbase.getName()));
+	skullbase.setRotation( (AxisAngle4f) rotTable.get(skullbase.getName()));
+	( (RotationPathInterpolator) polTable.get(skullbase.getName()) ).setTarget(skullbase.getScaleRotateTransformGroup());
+	skullbase.addChild( (RotationPathInterpolator) polTable.get(skullbase.getName()) );
+
+	SegmentAdapter skull = new SegmentAdapter("skull", referenceColors);
+
+
+// *****************************************************************
+// **** Put all the joints and segments together !             *****
+// *****************************************************************
+// *****************************************************************
+
+	l_wrist.addChild(l_hand.getGroup());
+
+	r_wrist.addChild(r_hand.getGroup());
+
+	l_elbow.addChild(l_forearm.getGroup());
+	l_elbow.addChild(l_wrist.getGroup());
+
+	r_elbow.addChild(r_forearm.getGroup());
+	r_elbow.addChild(r_wrist.getGroup());
+
+	l_shoulder.addChild(l_upperarm.getGroup());
+	l_shoulder.addChild(l_elbow.getGroup());
+
+	r_shoulder.addChild(r_upperarm.getGroup());
+	r_shoulder.addChild(r_elbow.getGroup());
+
+	l_ankle.addChild(l_hindfoot.getGroup());
+
+	r_ankle.addChild(r_hindfoot.getGroup());
+
+	l_knee.addChild(l_calf.getGroup());
+	l_knee.addChild(l_ankle.getGroup());
+
+	r_knee.addChild(r_calf.getGroup());
+	r_knee.addChild(r_ankle.getGroup());
+
+	l_hip.addChild(l_thigh.getGroup());
+	l_hip.addChild(l_knee.getGroup());
+
+	r_hip.addChild(r_thigh.getGroup());
+	r_hip.addChild(r_knee.getGroup());
+
+	skullbase.addChild(skull.getGroup());
+
+	vc4.addChild(c4.getGroup());
+	vc4.addChild(skullbase.getGroup());
+
+	vl1.addChild(c7.getGroup());
+	vl1.addChild(l_shoulder.getGroup());
+
+	vl1.addChild(r_shoulder.getGroup());
+      //r_shoulder.getGroup().addChild(leftObject);
+      //r_shoulder.getGroup().addChild(rightObject);
+
+	vl1.addChild(vc4.getGroup());
+
+	sacroiliac.addChild(pelvis.getGroup());
+	sacroiliac.addChild(l_hip.getGroup());
+	sacroiliac.addChild(r_hip.getGroup());
+
+	HumanoidRoot.addChild(sacroiliac.getGroup());
+	HumanoidRoot.addChild(vl1.getGroup());
+
+	rootGroup.addChild(HumanoidRoot.getGroup());
+
+      objRoot.addChild(rootGroup);
+
+
+      // Let Java 3D perform optimizations on this scene graph.
+      objRoot.compile();
+      return objRoot;
+   }
+
+  public static final Color3f HSBColor3f(int hue, int saturation, int brightness) {
+    Color3f col3f = new Color3f(Color.getHSBColor(hue/360.0f, saturation/100.0f, brightness/100.0f));
+    return col3f;
+  }
+
+
+
+  public TransformGroup createLimb(float radius, float radius2, float heigth) {
+  	// the createLimb function makes a transform group with a sphere with "radius", a
+  	// cylinder with "radius2" and "heigth", where the bottom of the cylinder
+  	// is on 0,0,0. This is our basic "limb"
+
+  	// The Sphere has emisive color "red", while the cylinder is "blue"
+  	// Since we have not applied any lighting, this is sufficient.
+
+  	TransformGroup base = new TransformGroup();
+
+	if (radius > 0.0f) {
+	  	Sphere sph = new Sphere(radius);
+
+	  	// Create a red sphere.
+	        Material emissiveMat = new Material();
+	        emissiveMat.setEmissiveColor( new Color3f(1.0f, 0.2f, 0.2f) );
+	        Appearance app = new Appearance();
+	        app.setMaterial(emissiveMat);
+
+	  	sph.setAppearance(app);
+  	  	base.addChild(sph);
+  	}
+
+ 	if (radius > 0.0f && heigth > 0.0f) {
+		Transform3D translate = new Transform3D();
+		translate.set(new Vector3f(0f, 0.5f*heigth, 0f));
+	  	TransformGroup cylTrans = new TransformGroup(translate);
+
+	  	Cylinder cyl = new Cylinder(radius2, heigth);
+
+	  	// Create a blue Cylinder.
+	        Material emissiveMat2 = new Material();
+ 	        emissiveMat2.setEmissiveColor( new Color3f(0.2f, 0.2f, 1.0f) );
+	        Appearance app2 = new Appearance();
+	        app2.setMaterial(emissiveMat2);
+		cyl.setAppearance(app2);
+
+  		cylTrans.addChild(cyl);
+  		base.addChild(cylTrans);
+	}
+
+  	return base;
+  }
+
+   public static void main(String[] args) {
+      JFrame frame = new Hanim8(args[0]);
+   }
+
+
+   // *************** BEHAVIOURS ************************************
+
+   	// Two behaviour classes (comments only added in the first)
+   	// These behaviours act on a key-press, at which moment they will transform
+   	// their target TransformGroup, so that it rotates around the X-axis from
+   	// PI to PI + 0.6
+   public class LeftBehavior extends Behavior{
+
+      private TransformGroup  targetTG;
+      private WakeupCriterion pairPostCondition;
+      private WakeupCriterion wakeupNextFrame;
+      private WakeupCriterion AWTEventCondition;
+      private Transform3D     t3D = new Transform3D();
+      private Matrix3d        rotMat = new Matrix3d();
+      private double          armAngle;
+
+      LeftBehavior(TransformGroup targetTG){
+
+          this.targetTG = targetTG;
+
+          // react to any key being pressed
+          AWTEventCondition = new WakeupOnAWTEvent(KeyEvent.KEY_PRESSED);
+          wakeupNextFrame = new WakeupOnElapsedFrames(0);
+
+      }
+
+      public void setBehaviorObjectPartner(Behavior behaviorObject){
+          pairPostCondition = new WakeupOnBehaviorPost(behaviorObject, 1);
+      }
+
+      public void initialize(){
+          this.wakeupOn(AWTEventCondition);
+
+          // initial angle
+          armAngle = 0.0f + Math.PI;
+
+      }
+
+      public void processStimulus(Enumeration criteria){
+
+          if (criteria.nextElement().equals(pairPostCondition)){
+              this.wakeupOn(AWTEventCondition);
+              armAngle = 0.0f + Math.PI;
+          } else { // could be KeyPress or nextFrame, in either case: open
+
+              if (armAngle < 0.6 + Math.PI){
+                  armAngle += 0.1;
+                  if (armAngle > 0.6 + Math.PI) armAngle = 0.6 + Math.PI;
+                  // get rotation and scale portion of transform
+                  targetTG.getTransform(t3D);
+                  t3D.getRotationScale(rotMat);
+
+                  // set x-axis rotation to armAngle
+                  // (clobber any previous x-rotation, y and z scale)
+                  rotMat.m11 = Math.cos(armAngle);
+                  rotMat.m22 = rotMat.m11;
+                  rotMat.m12 = Math.sin(armAngle);
+                  rotMat.m21 = -rotMat.m12;
+
+                  t3D.setRotation(rotMat);
+                  targetTG.setTransform(t3D);
+                  this.wakeupOn(wakeupNextFrame);
+              } else { // finished animting arm one way, signal other behavior
+                  this.wakeupOn(pairPostCondition);
+                  postId(1);
+              }
+          }
+      }
+
+  } // end of class OpenBehavior
+
+  public class RightBehavior extends Behavior{
+
+      private TransformGroup  targetTG;
+      private WakeupCriterion pairPostCondition;
+      private WakeupCriterion wakeupNextFrame;
+      private WakeupCriterion AWTEventCondition;
+      private Transform3D     t3D = new Transform3D();
+      private Matrix3d        rotMat = new Matrix3d();
+      private double          armAngle;
+
+
+      RightBehavior(TransformGroup targetTG){
+      	  float[] blaat = new float[4];
+
+          this.targetTG = targetTG;
+          AWTEventCondition = new WakeupOnAWTEvent(KeyEvent.KEY_PRESSED);
+          wakeupNextFrame = new WakeupOnElapsedFrames(0);
+
+      }
+
+      public void setBehaviorObjectPartner(Behavior behaviorObject){
+          pairPostCondition = new WakeupOnBehaviorPost(behaviorObject, 1);
+      }
+
+      public void initialize(){
+          this.wakeupOn(pairPostCondition);
+
+          armAngle = 0.6f + Math.PI;
+      }
+
+      public void processStimulus(Enumeration criteria){
+
+          if (criteria.nextElement().equals(pairPostCondition)){
+              this.wakeupOn(AWTEventCondition);
+              armAngle = 0.6f + Math.PI;
+          } else { // could be KeyPress or nextFrame, in either case: close
+              if (armAngle > 0.0f + Math.PI){
+                  armAngle -= 0.1;
+                  if (armAngle < 0.0f + Math.PI) armAngle = 0.0f + Math.PI;
+                  // get rotation and scale portion of transform
+                  targetTG.getTransform(t3D);
+                  t3D.getRotationScale(rotMat);
+
+                  // set x-axis rotation to armAngle
+                  // (clobber any previous x-rotation, y and z scale)
+                  rotMat.m11 = Math.cos(armAngle);
+                  rotMat.m22 = rotMat.m11;
+                  rotMat.m12 = Math.sin(armAngle);
+                  rotMat.m21 = -rotMat.m12;
+
+                  t3D.setRotation(rotMat);
+                  targetTG.setTransform(t3D);
+                  this.wakeupOn(wakeupNextFrame);
+              } else { // finished animting arm one way, signal other behavior
+                  this.wakeupOn(pairPostCondition);
+                  postId(1);
+              }
+          }
+      }
+
+  } // End of class RightBehaviour
+
+}
